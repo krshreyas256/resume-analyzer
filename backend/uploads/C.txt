@@ -1,0 +1,166 @@
+Program 6:
+
+#include <stdio.h>
+
+// Function prototypes
+void bubbleSort(int a[], int n);       // Ascending
+void selectionSort(int a[], int n);    // Descending
+
+int main()
+{
+    int a[100], n, i, ch;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements to be sorted:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    printf("\nMENU\n1. Bubble Sort (Ascending)\n2. Selection Sort (Descending)\n");
+    printf("Enter your choice: ");
+    scanf("%d", &ch);
+
+    switch (ch)
+    {
+        case 1: bubbleSort(a, n);
+                break;
+        case 2: selectionSort(a, n);
+                break;
+        default: printf("Invalid choice\n");
+                 return 0;
+    }
+
+    printf("\nArray after sorting:\n");
+    for (i = 0; i < n; i++)
+        printf("%d\t", a[i]);
+
+    return 0;
+}
+
+// Bubble Sort: Ascending
+void bubbleSort(int a[], int n)
+{
+    int i, j, temp;
+    for (i = 0; i < n - 1; i++)
+    {
+        for (j = 0; j < (n - 1) - i; j++)
+        {
+            if (a[j + 1] < a[j])   // smaller goes left → ascending
+            {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+        }
+    }
+    printf("\nEND Bubble Sort (Ascending)\n");
+}
+
+// Selection Sort: Descending
+void selectionSort(int a[], int n)
+{
+    int i, j, max, temp;
+    for (i = 0; i < n - 1; i++)
+    {
+        max = i;
+        for (j = i + 1; j < n; j++)
+        {
+            if (a[j] > a[max])   // larger goes left → descending
+                max = j;
+        }
+        temp = a[i];
+        a[i] = a[max];
+        a[max] = temp;
+    }
+    printf("\nEND Selection Sort (Descending)\n");
+}
+
+
+
+
+Program 5:
+
+#include <stdio.h>
+
+int linearSearch(int a[], int n, int key)
+{
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        if (a[i] == key)
+            return i;  // return index if found
+    }
+    return -1;  // not found
+}
+
+int binarySearch(int a[], int n, int key)
+{
+    int low = 0, high = n - 1, mid;
+
+    while (low <= high)
+    {
+        mid = (low + high) / 2;
+
+        if (a[mid] == key)
+            return mid;  // found
+        else if (a[mid] < key)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+
+    return -1;  // not found
+}
+
+int main()
+{
+    int a[100], n, i, key, ch, result;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("MENU\n1. Linear Search\n2. Binary Search (sorted input required)\n");
+    printf("Enter your choice: ");
+    scanf("%d", &ch);
+
+    if (ch == 1)
+    {
+        printf("Enter array elements: ");
+    }
+    else if (ch == 2)
+    {
+        printf("Enter array elements in sorted order: ");
+    }
+    else
+    {
+        printf("Invalid choice\n");
+        return 1;  // error exit
+    }
+
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    printf("Enter key element to search: ");
+    scanf("%d", &key);
+
+    switch (ch)
+    {
+        case 1:
+            result = linearSearch(a, n, key);
+            break;
+
+        case 2:
+            result = binarySearch(a, n, key);
+            break;
+    }
+
+    if (result == -1)
+        printf("\nElement %d not found in the array.\n", key);
+    else
+        printf("\nElement %d found at position %d (1-based index).\n", key, result + 1);
+
+    return 0;
+}
+
+
